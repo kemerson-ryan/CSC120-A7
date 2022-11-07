@@ -7,7 +7,14 @@ import java.util.Hashtable;
  * @version October 31, 2022
  */
 public class Library extends Building {
-
+  @Override   //overriding Building's showOptions method
+        public void showOptions() {
+          if(this.hasElevator){
+            System.out.println("Available options at " + this.name + ":\n + enter() \n + exit() \n + goUp() \n + goDown()\n + goToFloor(n) \n + addTitle(String title) \n + removeTitle(String title) \n + checkOut(String title) \n + returnTitle(String title) \n + containsTitle(String title) \n + isAvailable(String title) \n + printCollection()");
+          } else {
+            System.out.println("Available options at " + this.name + ":\n + enter() \n + exit() \n + goUp() \n + goDown()\n + addTitle(String title) \n + removeTitle(String title) \n + checkOut(String title) \n + returnTitle(String title) \n + containsTitle(String title) \n + isAvailable(String title) \n + printCollection()");
+          }
+    }
   /**
    * Allocates space for private hashtable of string and boolean key and value
    */
@@ -21,7 +28,8 @@ public class Library extends Building {
    */
   public Library(String name, String address, int nFloors) {
     super(name, address, nFloors);
-    collection = new Hashtable<String, Boolean>();
+    hasElevator = true;
+    this.collection = new Hashtable<String, Boolean>();
     System.out.println("You have built a library: 📖");
   }
 
@@ -30,31 +38,34 @@ public class Library extends Building {
    * @param title of book
    */
   public void addTitle(String title){
-    collection.put(title, true);
+    this.collection.put(title, true);
   }
   /**
    * Removes title to library's collection of books
    * @param title of book
    * @return printable string indicating the title that has been removed
    */
-  public String removeTitle(String title){
-    collection.remove(title);
-    return title + " has been removed from the collection";
+  public void removeTitle(String title){
+    if(containsTitle(title)){
+      this.collection.remove(title);
+    System.out.println(title + " has been removed from the collection");
+    } else{
+      System.out.println(title + " cannot be removed from this collection, because we do not have it in our collection");
+    }
   }
-
   /**
    * Changes value in key-value pair to indicate title not available in library
    * @param title of book
    */
   public void checkOut(String title){
-    collection.replace(title, false);
+    this.collection.replace(title, false);
   }
   /**
    * Changes value in key-value pair to indicate title is available in library
    * @param title of book
    */
   public void returnTitle(String title){
-    collection.replace(title, true);
+    this.collection.replace(title, true);
   }
 
   /**
@@ -63,7 +74,8 @@ public class Library extends Building {
    * @return t/f: is in collection
    */
   public boolean containsTitle(String title){
-    boolean containsTitle = collection.contains(title);
+    boolean containsTitle = this.collection.containsKey(title);
+    System.out.println(name + " contains '" + title + "': " + containsTitle);
     return containsTitle;
   }
   /**
@@ -71,16 +83,16 @@ public class Library extends Building {
    * @param title of book
    * @return t/f: book is available
    */
-  public boolean isAvailable(String title){
-    boolean isAvailable = collection.get(title); 
-    return isAvailable;
+  public void isAvailable(String title){
+    boolean isAvailable = this.collection.get(title); 
+    System.out.println("'" + title + "' is available: " + isAvailable);
   }
   
   /**
    * Prints all key-value pairs in hashtable
    */
   public void printCollection(){
-    System.out.println(collection.toString());
+    System.out.println(this.collection.toString());
   }
 
   /**
@@ -90,12 +102,33 @@ public class Library extends Building {
   public static void main(String[] args) {
     Library neilsonLibrary = new Library("Neilson Library", "7 Neilson Drive", 5);
     System.out.println(neilsonLibrary);
-    neilsonLibrary.addTitle("Where the Crawdads Sing");
-    neilsonLibrary.printCollection(); 
+    
+    Library jostenLibrary = new Library("Josten Library", "7 Neilson Drive", 5);
+    System.out.println(jostenLibrary);
 
-    neilsonLibrary.checkOut("Where the Crawdads Sing");
-    neilsonLibrary.removeTitle("Where the Crawdads Sing");
-    System.out.println(neilsonLibrary.removeTitle("Where the Crawdads Sing"));
-    //System.out.println(neilsonLibrary.isAvailable("Where the Crawdads Sing"));
+    //neilsonLibrary.addTitle("Where the Crawdads Sing");
+    //neilsonLibrary.printCollection(); 
+
+    //neilsonLibrary.containsTitle("Where the Crawdads Sing");
+    //neilsonLibrary.printCollection(); 
+
+    //neilsonLibrary.removeTitle("Where the Crawdads");
+    //neilsonLibrary.printCollection(); 
+
+    //neilsonLibrary.isAvailable("Where the Crawdads Sing");
+    //neilsonLibrary.printCollection(); 
+
+    jostenLibrary.enter();
+    //jostenLibrary.goUp();
+    jostenLibrary.goToFloor(3);
+    //jostenLibrary.exit();
+
+    //neilsonLibrary.showOptions();
+    neilsonLibrary.enter();
+    neilsonLibrary.goUp();
+    neilsonLibrary.goToFloor(3);
+    neilsonLibrary.exit();
+
+    
     }
   }

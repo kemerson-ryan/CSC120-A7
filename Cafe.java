@@ -5,6 +5,19 @@
  * @version October 31, 2022
  */
 public class Cafe extends Building {
+    @Override   //overriding Building's showOptions method
+        public void showOptions() {
+            System.out.println("Available options at " + this.name + ":\n + enter() \n + exit() \n + sellCoffee(int amtCoffeeOunces, int amtSugarPackets, int amtCreams)");
+    }
+    @Override   //overriding Building's goToFloor method
+        public void goToFloor(int floorNum){
+            if (this.activeFloor == -1) {
+                throw new RuntimeException("You are not inside this Building. Must call enter() before navigating between floors.");
+            }
+            if (floorNum < 1 || floorNum > 1) {
+                throw new RuntimeException("Invalid floor number. You only have permission to be on ground floor.");
+            }
+        }
     /**
      * Allocating space for variables used throughout Cafe class
      */
@@ -34,6 +47,12 @@ public class Cafe extends Building {
      * @param number of Creams initially stocked at the cafe
      * @param number of Cups initially stocked at the cafe
      */
+    public Cafe(String name, String address, int nFloors) {
+        this(name, address, nFloors, 200, 60, 60, 20);
+    }
+    public Cafe(String name, String address, int nFloors, int nCoffeeOunces) {
+        this(name, address, nFloors, nCoffeeOunces, nCoffeeOunces/4, nCoffeeOunces/4, nCoffeeOunces/16);
+    }
     public Cafe(String name, String address, int nFloors, int nCoffeeOunces, int nSugarPackets, int nCreams, int nCups) {
         super(name, address, nFloors);
 
@@ -118,11 +137,26 @@ public class Cafe extends Building {
     }
 
     /**
-     * Use setters to remove supplies from inventory with each purchase, and calls restock method after sale
+     * Overloaded methods based on order details use setters to remove supplies from inventory with each purchase, and calls restock method after sale
      * @param amount Coffee purchased
      * @param amount Sugar purchased
      * @param amount Cream purchased
      */
+    public void sellCoffee(int amtCoffeeOunces){ 
+        setnCoffeeOunces(amtCoffeeOunces);
+        setnCups();
+        System.out.println("Successful sale of one " + amtCoffeeOunces + "-ounce coffee, with no sugar packets or creams.");
+        System.out.println();
+        restock();
+    }
+    public void sellCoffee(int amtCoffeeOunces, int amtSugarPackets){ 
+        setnCoffeeOunces(amtCoffeeOunces);
+        setnSugarPackets(amtSugarPackets);
+        setnCups();
+        System.out.println("Successful sale of one " + amtCoffeeOunces + "-ounce coffee, with " + amtSugarPackets + " sugar packets, and no creams.");
+        System.out.println();
+        restock();
+    }
     public void sellCoffee(int amtCoffeeOunces, int amtSugarPackets, int amtCreams){ //renamed for sell to be different from original inventory names
         setnCoffeeOunces(amtCoffeeOunces);
         setnSugarPackets(amtSugarPackets);
@@ -176,20 +210,29 @@ public class Cafe extends Building {
      * @param args
      */
     public static void main(String[] args) {
-        Cafe compassCafe = new Cafe("Compass Cafe", "7 Neilson Drive", 1, 35, 120, 120, 75);
+        Cafe compassCafe = new Cafe("Compass Cafe", "7 Neilson Drive", 1, 100);
+        compassCafe.restock();
+        //Cafe compassCafe = new Cafe("Compass Cafe", "7 Neilson Drive", 1, 35, 120, 120, 75);
         Cafe starbucks = new Cafe("Starbucks Coffee", "100 Industrial Road", 3, 600,200,200,3);
         
         System.out.println(compassCafe);
         System.out.println(starbucks);
 
-        compassCafe.sellCoffee(34, 2, 3);
-        compassCafe.getInventory();
+        //compassCafe.sellCoffee(2, 0, 0);
+        //compassCafe.getInventory();
 
-        compassCafe.sellCoffee(12, 4, 0);
-        starbucks.sellCoffee(1, 1, 1);
+        //compassCafe.sellCoffee(12, 4, 0);
+        //starbucks.sellCoffee(1, 1, 1);
 
         compassCafe.getInventory();
         starbucks.getInventory();
+
+        compassCafe.enter();
+        compassCafe.goUp();
+
+        //starbucks.showOptions();
+        //compassCafe.showOptions();
+
     }
     
 }

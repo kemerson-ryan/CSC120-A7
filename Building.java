@@ -1,11 +1,14 @@
 import javax.management.RuntimeErrorException;
+import java.lang.Math;
 
 public class Building {
 
     protected String name;
     protected String address;
     protected int nFloors;
-    private int activeFloor = -1; // Default value indicating we are not inside this building
+    protected boolean hasElevator;
+    protected int activeFloor = -1; // Default value indicating we are not inside this building
+
 
     /* Default constructor */
     public Building() {
@@ -31,6 +34,7 @@ public class Building {
             throw new RuntimeException("Cannot construct a building with fewer than 1 floor.");
         }
         this.nFloors = nFloors;
+        this.hasElevator = false;
     }
 
     /* Accessors */
@@ -48,6 +52,9 @@ public class Building {
 
     /* Navigation methods */
     public Building enter() {
+        if (activeFloor != -1){
+            throw new RuntimeException("You are already inside this Building.");
+        }
         this.activeFloor = 1;
         System.out.println("You are now inside " + this.name + " on the ground floor.");
         return this; // Return a pointer to the current building
@@ -61,6 +68,7 @@ public class Building {
             throw new RuntimeException("You have fallen out a window from floor #" +this.activeFloor + "!");
         }
         System.out.println("You have left " + this.name + ".");
+        this.activeFloor = -1;
         return null; // We're outside now, so the building is null
     }
 
@@ -71,8 +79,13 @@ public class Building {
         if (floorNum < 1 || floorNum > this.nFloors) {
             throw new RuntimeException("Invalid floor number. Valid range for this Building is 1-" + this.nFloors +".");
         }
-        System.out.println("You are now on floor #" + floorNum + " of " + this.name);
-        this.activeFloor = floorNum;
+        if (Math.abs(floorNum-this.activeFloor) > 1 && !hasElevator){
+            throw new RuntimeException("There's no elevator in this building. To change floors, instead try: \n + goUp() \n + goDown()");
+        } 
+        else {
+            System.out.println("You are now on floor #" + floorNum + " of " + this.name);
+            this.activeFloor = floorNum;
+        }
     }
 
     public void goUp() {
@@ -108,5 +121,4 @@ public class Building {
         fordHall.goDown();
         fordHall.exit();
     }
-
 }

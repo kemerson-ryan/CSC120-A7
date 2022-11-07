@@ -7,7 +7,10 @@ import java.util.ArrayList;
  * @version October 31, 2022
  */
 public class House extends Building {
-
+  @Override   //overriding Building's showOptions method
+        public void showOptions() {
+        System.out.println("Available options at " + this.name + ":\n + enter() \n + exit() \n + goUp() \n + goDown() \n + goToFloor(n) \n + getHasDiningRoom() \n + getnResidents() \n + moveIn(String residentName) \n + moveOut(String residentName) \n + isResident(String residentName)");
+    }
   /**
    * Allocating space for an array of students and boolean whether or not there's a dining room
    */
@@ -22,8 +25,12 @@ public class House extends Building {
    * @param t/f: house has a dining room
    */
   public House(String name, String address, int nFloors, boolean hasDR) {
+    this(name, address, nFloors, hasDR, false);
+  }
+  public House(String name, String address, int nFloors, boolean hasDR, boolean hasElevator) {
     super(name, address, nFloors);
     this.hasDiningRoom = hasDR;
+    this.hasElevator = hasElevator;
     this.residents = new ArrayList<String>();
     System.out.println("You have built a house: 🏠");
   }
@@ -36,10 +43,18 @@ public class House extends Building {
     return this.hasDiningRoom;
   }
   /**
+   * Getter for if house has an elevator
+   * @return t/f: house has an elevator
+   */
+  public boolean getHasElevator() {
+    return this.hasDiningRoom;
+  }
+  /**
    * Getter for number of residents in house
    * @return number of strings in array of students
    */
   public int getnResidents(){
+    System.out.println("There are " + this.residents.size() + " residents in " + getName() + " house");
     return this.residents.size();
   }
   /**
@@ -64,6 +79,7 @@ public class House extends Building {
    */
   public boolean isResident(String residentName){
     boolean isResident = residents.contains(residentName);
+    System.out.println(residentName + " is a resident in " + getName() + ": " + isResident);
     return isResident;
   }
   
@@ -72,10 +88,19 @@ public class House extends Building {
    * @param args
    */
   public static void main(String[] args) {
-    House emersonHouse = new House("Emerson", "1 Paradise Lane", 4, true);
+    House emersonHouse = new House("Emerson House", "1 Paradise Lane", 4, true);
+    House jordanHouse = new House("Jordan House", "1 Paradise Lane", 4, false, true);
     System.out.println(emersonHouse);
-    //emersonHouse.moveIn("Xochitl Krumbiegel"); 
-    //System.out.println(emersonHouse.nResidents()); 
-    //System.out.println(emersonHouse.isResident("Xochitl Krumbiegel"));
+    System.out.println(jordanHouse);
+    jordanHouse.moveIn("Xochitl Krumbiegel"); 
+    //emersonHouse.moveIn("Ryan Emerson");
+    //emersonHouse.isResident("Xochitl Krumbiegel");
+    //emersonHouse.getnResidents();
+    jordanHouse.getnResidents();
+    jordanHouse.getnResidents();
+    jordanHouse.isResident("Xochitl Krumbiegel");
+    jordanHouse.isResident("Ryan Emerson");
+
+    //emersonHouse.showOptions();
   }
 }
