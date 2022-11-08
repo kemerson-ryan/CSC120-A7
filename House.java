@@ -4,13 +4,14 @@ import java.util.ArrayList;
  * House class extends from Building class
  * no outside sources used
  * @author Ryan (K) Emerson
- * @version October 31, 2022
+ * @version November 7, 2022
  */
 public class House extends Building {
   @Override   //overriding Building's showOptions method
         public void showOptions() {
-        System.out.println("Available options at " + this.name + ":\n + enter() \n + exit() \n + goUp() \n + goDown() \n + goToFloor(n) \n + getHasDiningRoom() \n + getnResidents() \n + moveIn(String residentName) \n + moveOut(String residentName) \n + isResident(String residentName)");
+        System.out.println("Available options at " + this.name + ":\n + enter() \n + exit() \n + goUp() \n + goDown() \n + goToFloor(n) \n + getHasDiningRoom() \n + getnResidents() \n + moveIn(String residentName) \n + moveOut(String residentName) \n + moveOut() \n + isResident(String residentName)");
     }
+
   /**
    * Allocating space for an array of students and boolean whether or not there's a dining room
    */
@@ -63,6 +64,13 @@ public class House extends Building {
    */
   public void moveIn(String residentName){
     residents.add(residentName);
+  }
+  /**
+   * Clears resident array
+   */
+  public void moveOut(){
+    residents.clear();
+    System.out.println("All students have been moved out of " + getName());
   }
   /**
    * Removes student name from array of residents in the house

@@ -9,7 +9,6 @@ public class Building {
     protected boolean hasElevator;
     protected int activeFloor = -1; // Default value indicating we are not inside this building
 
-
     /* Default constructor */
     public Building() {
         this("<Name Unknown>", "<Address Unknown>", 1);
@@ -105,20 +104,21 @@ public class Building {
     }
 
     public static void main(String[] args) {
-        System.out.println("------------------------------------");
-        System.out.println("Test of Building constructor/methods");
-        System.out.println("------------------------------------");
+        //System.out.println("------------------------------------");
+        //System.out.println("Test of Building constructor/methods");
+        //System.out.println("------------------------------------");
         
         Building fordHall = new Building("Ford Hall", "100 Green Street Northampton, MA 01063", 4);
-        System.out.println(fordHall);
+        //System.out.println(fordHall);
         fordHall.showOptions();
+        
 
-        System.out.println("-----------------------------------");
-        System.out.println("Demonstrating enter/exit/navigation");
-        System.out.println("-----------------------------------");
-        fordHall.enter();
-        fordHall.goUp();
-        fordHall.goDown();
-        fordHall.exit();
+        //System.out.println("-----------------------------------");
+        //System.out.println("Demonstrating enter/exit/navigation");
+        //System.out.println("-----------------------------------");
+        //fordHall.enter();
+        //fordHall.goUp();
+        //fordHall.goDown();
+        //fordHall.exit();
     }
 }

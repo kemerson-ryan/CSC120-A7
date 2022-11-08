@@ -4,15 +4,15 @@ import java.util.Hashtable;
  * Library class extends Building class
  * no outside sources used
  * @author Ryan (K) Emerson
- * @version October 31, 2022
+ * @version November 7, 2022
  */
 public class Library extends Building {
   @Override   //overriding Building's showOptions method
         public void showOptions() {
           if(this.hasElevator){
-            System.out.println("Available options at " + this.name + ":\n + enter() \n + exit() \n + goUp() \n + goDown()\n + goToFloor(n) \n + addTitle(String title) \n + removeTitle(String title) \n + checkOut(String title) \n + returnTitle(String title) \n + containsTitle(String title) \n + isAvailable(String title) \n + printCollection()");
+            System.out.println("Available options at " + this.name + ":\n + enter() \n + exit() \n + goUp() \n + goDown()\n + goToFloor(n) \n + addTitle(String title) \n + addTitle(String title, String titleTwo) \n + removeTitle(String title) \n + checkOut(String title) \n + returnTitle(String title) \n + containsTitle(String title) \n + isAvailable(String title) \n + printCollection()");
           } else {
-            System.out.println("Available options at " + this.name + ":\n + enter() \n + exit() \n + goUp() \n + goDown()\n + addTitle(String title) \n + removeTitle(String title) \n + checkOut(String title) \n + returnTitle(String title) \n + containsTitle(String title) \n + isAvailable(String title) \n + printCollection()");
+            System.out.println("Available options at " + this.name + ":\n + enter() \n + exit() \n + goUp() \n + goDown()\n + addTitle(String title) \n + addTitle(String title, String titleTwo) \n + removeTitle(String title) \n + checkOut(String title) \n + returnTitle(String title) \n + containsTitle(String title) \n + isAvailable(String title) \n + printCollection()");
           }
     }
   /**
@@ -28,9 +28,9 @@ public class Library extends Building {
    */
   public Library(String name, String address, int nFloors) {
     super(name, address, nFloors);
-    hasElevator = true;
+    this.hasElevator = true;
     this.collection = new Hashtable<String, Boolean>();
-    System.out.println("You have built a library: 📖");
+    //System.out.println("You have built a library: 📖");
   }
 
   /**
@@ -39,6 +39,15 @@ public class Library extends Building {
    */
   public void addTitle(String title){
     this.collection.put(title, true);
+  }
+  /**
+   * Adds two titles to library's collection of books
+   * @param title of book
+   * @param title of second book
+   */
+  public void addTitle(String title, String titleTwo){
+    this.collection.put(title, true);
+    this.collection.put(titleTwo, true);
   }
   /**
    * Removes title to library's collection of books
@@ -59,6 +68,15 @@ public class Library extends Building {
    */
   public void checkOut(String title){
     this.collection.replace(title, false);
+  }
+  /**
+   * Changes values in two key-value pairs to indicate titles not available in library
+   * @param title of book
+   * @param title of second book
+   */
+  public void checkOut(String title, String titleTwo){
+    this.collection.replace(title, false);
+    this.collection.replace(titleTwo, false);
   }
   /**
    * Changes value in key-value pair to indicate title is available in library

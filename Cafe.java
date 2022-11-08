@@ -2,12 +2,12 @@
  * Cafe class extends Building class
  * no outside sources used
  * @author Ryan (K) Emerson
- * @version October 31, 2022
+ * @version November 7, 2022
  */
 public class Cafe extends Building {
     @Override   //overriding Building's showOptions method
         public void showOptions() {
-            System.out.println("Available options at " + this.name + ":\n + enter() \n + exit() \n + sellCoffee(int amtCoffeeOunces, int amtSugarPackets, int amtCreams)");
+            System.out.println("Available options at " + this.name + ":\n + enter() \n + exit() \n + sellCoffee(int amtCoffeeOunces) \n + sellCoffee(int amtCoffeeOunces, int amtSugarPackets) \n + sellCoffee(int amtCoffeeOunces, int amtSugarPackets, int amtCreams)");
     }
     @Override   //overriding Building's goToFloor method
         public void goToFloor(int floorNum){
@@ -72,7 +72,7 @@ public class Cafe extends Building {
         this.restockCups = nCups;
         this.lowThresholdCups = nCups/10;
 
-        System.out.println("You have built a cafe: ☕");
+        //System.out.println("You have built a cafe: ☕");
     }
 
     /**
@@ -143,19 +143,10 @@ public class Cafe extends Building {
      * @param amount Cream purchased
      */
     public void sellCoffee(int amtCoffeeOunces){ 
-        setnCoffeeOunces(amtCoffeeOunces);
-        setnCups();
-        System.out.println("Successful sale of one " + amtCoffeeOunces + "-ounce coffee, with no sugar packets or creams.");
-        System.out.println();
-        restock();
+        this.sellCoffee(amtCoffeeOunces, 0, 0);
     }
     public void sellCoffee(int amtCoffeeOunces, int amtSugarPackets){ 
-        setnCoffeeOunces(amtCoffeeOunces);
-        setnSugarPackets(amtSugarPackets);
-        setnCups();
-        System.out.println("Successful sale of one " + amtCoffeeOunces + "-ounce coffee, with " + amtSugarPackets + " sugar packets, and no creams.");
-        System.out.println();
-        restock();
+        this.sellCoffee(amtCoffeeOunces, amtSugarPackets, 0);
     }
     public void sellCoffee(int amtCoffeeOunces, int amtSugarPackets, int amtCreams){ //renamed for sell to be different from original inventory names
         setnCoffeeOunces(amtCoffeeOunces);
@@ -228,11 +219,9 @@ public class Cafe extends Building {
         starbucks.getInventory();
 
         compassCafe.enter();
-        compassCafe.goUp();
+        //compassCafe.goUp();
 
         //starbucks.showOptions();
-        //compassCafe.showOptions();
-
+        compassCafe.showOptions();
     }
-    
 }
